@@ -22,12 +22,11 @@ sm_type next_state;
 always_ff @(posedge clk, posedge reset) begin
     if (reset == 1'b1) begin
         current_state <= idle_st;
-        busy = 1'b0;
-        a_sel = 2'b00;
-        b_sel = 1'b0;
-        shift_sel = 3'b000;
-        upd_prod = 1'b0;
-        clr_prod = 1'b1;
+        a_sel <= 2'b00;
+        b_sel<= 1'b0;
+        shift_sel <= 3'b000;
+        upd_prod <= 1'b0;
+        clr_prod <= 1'b1;
         
     end
     else begin
@@ -107,14 +106,15 @@ always_comb begin
     end
     A4B2: begin
         next_state = idle_st;
-        upd_prod = 1'b1;
         busy = 1'b0;
+        a_sel = 2'b00;
+        b_sel = 1'b0;
+        shift_sel = 3'b000;
+        upd_prod = 1'b1;
+        clr_prod = 1'b0;
     end     
           
     endcase
-
-
-
 
 end
 
