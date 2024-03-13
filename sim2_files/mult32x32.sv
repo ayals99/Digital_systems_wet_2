@@ -11,6 +11,10 @@ module mult32x32 (
 
 // Put your code here
 // ------------------
+    //defining our states
+    typedef enum {idle_st, A1B1, A2B1, A3B1, A4B1, A1B2, A2B2, A3B2, A4B2} sm_type;kfdasd
+
+    
 
 
 // End of your code
