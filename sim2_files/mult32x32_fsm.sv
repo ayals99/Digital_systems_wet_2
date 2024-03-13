@@ -37,30 +37,6 @@ always_ff @(posedge clk, posedge reset) begin
 end
 
 always_comb begin
-    //default state
-    next_state = current_state;
-    busy = 1'b0;
-    a_sel = 2'b00;
-    b_sel = 1'b0;
-    shift_sel = 3'b000;
-    upd_prod = 1'b0;
-    clr_prod = 1'b0;
-
-    if(current_state == idle_st)begin
-
-        if (start == 1) begin
-            next_state <= A1B1;
-        end
-        else begin
-            next_state <= idle_st;
-        end
-
-    end
-
-end
-
-
-always_comb begin
     next_state = current_state;
     busy = 1'b0;
     a_sel = 2'b00;
