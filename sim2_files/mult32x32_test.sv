@@ -11,6 +11,43 @@ module mult32x32_test;
 
 // Put your code here
 // ------------------
+mult32x32 DUT (
+    .clk(clk),
+    .reset(reset),
+    .start(start),
+    .a(a),
+    .b(b),
+    .busy(busy),
+    .product(product)
+);
+
+initial begin
+    // Initialize signals
+    clk = 1'b0;
+    reset = 1'b1;
+    start = 1'b0;
+    a = 0;
+    b = 0;    
+
+    #40;
+    reset = 1'b0;
+    a = 32'd208622142;
+    b = 32'd316088970;
+
+    #10;
+    start = 1'b1;
+
+    #10;
+    start = 1'b0;
+    while(busy) begin
+        #10;
+    end
+end
+
+always begin
+    #5;
+    clk = ~clk;
+end 
 
 // End of your code
 
