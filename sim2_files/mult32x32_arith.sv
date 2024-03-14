@@ -52,16 +52,12 @@ end
 
 
 always_ff @(posedge clk, posedge reset) begin
-    if (reset) begin
+    if (reset || clr_prod) begin
         product <= 64'b0;
-    end
-    else if (upd_prod) begin
-        product <= product + accumulator;        
-    end
+    end 
     else if (clr_prod) begin
         product <= 64'b0;        
     end
-
 end 
 
 
