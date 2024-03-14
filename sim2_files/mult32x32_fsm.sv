@@ -22,11 +22,6 @@ sm_type next_state;
 always_ff @(posedge clk, posedge reset) begin
     if (reset == 1'b1) begin
         current_state <= idle_st;
-        a_sel <= 2'b00;
-        b_sel<= 1'b0;
-        shift_sel <= 3'b000;
-        upd_prod <= 1'b0;
-        clr_prod <= 1'b1;
         
     end
     else begin
