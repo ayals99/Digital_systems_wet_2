@@ -40,10 +40,11 @@ initial begin
     #10;
     start = 1'b0;
 
-always begin
-    #5;
-    clk = ~clk;
-end 
+    always begin
+        #5;
+        clk = ~clk;
+    end 
+end
 
 // End of your code
 
