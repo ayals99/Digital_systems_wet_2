@@ -20,6 +20,10 @@ mult32x32 DUT (
     .busy(busy),
     .product(product)
 );
+    always begin
+        #5;
+        clk = ~clk;
+    end 
 
 initial begin
     // Initialize signals
@@ -40,10 +44,7 @@ initial begin
     #10;
     start = 1'b0;
 
-    always begin
-        #5;
-        clk = ~clk;
-    end 
+
 end
 
 // End of your code

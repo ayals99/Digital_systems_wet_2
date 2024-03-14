@@ -31,6 +31,7 @@ always_ff @(posedge clk, posedge reset) begin
 end
 
 always_comb begin
+    //initializing default values
     next_state = current_state;
     busy = 1'b1;
     a_sel = 2'b00;
@@ -48,59 +49,94 @@ always_comb begin
                 clr_prod = 1'b1;
             end
         end
+
+        //Computing the first state
         A1B1: begin
             next_state = A2B1;
             a_sel = 2'b00;
             b_sel = 1'b0;
         end
+
+        //Computing the second state
         A2B1: begin
             next_state = A3B1;
             a_sel = 2'b01;
             shift_sel = 3'b001;
-
         end
+
+        //Computing the third state
+        //if both new inputs are true after the current caculation we go back to the idle_st
+        //if a_msb is true only then we move to state A1B2
+        //otherwise we contiue normally
         A3B1: begin
-            next_state = A4B1;
             a_sel = 2'b10;
             shift_sel = 3'b010;
+            if (a_msb_is_0) begin
+                if (b_msw_is_0) begin
+                    next_state = idle_st;
+                end
+                else begin
+                    next_state = A1B2;
+                end
+            end
+            else begin
+                next_state = A4B1;
+            end        
         end
-        A4B1: begin
-            next_state = A1B2;
+        
+        //computing the fourth state
+        //if we got to here it means the a_msb is false which means we only need to check b_msw
+        //if m_msw is true we skip to the idle_st otherwise we go to the next state
+        A4B1: begin   
             a_sel = 2'b11;
             shift_sel = 3'b011;
+            if (b_msw_is_0) begin
+                next_state = idle_st;
+            end
+            else begin
+                next_state = A1B2;
+            end
         end
+
+
         A1B2: begin
             next_state = A2B2;
             a_sel = 2'b00;
             b_sel = 1'b1;
             shift_sel = 3'b010;
         end
+
         A2B2: begin
             next_state = A3B2;
             a_sel = 2'b01;
             b_sel = 1'b1;
             shift_sel = 3'b011;
         end
+
+        //computing the seventh state
+        //if we got here it means that b_msw is false so we shppuld check only a_msb
+        //if a_msb is true then we skip the final state and move to idle_st
+        //otherwise we continue to the final state before idle
         A3B2: begin
-            next_state = A4B2;
             a_sel = 2'b10;
             b_sel = 1'b1;
-            shift_sel = 3'b100;
+            shift_sel = 3'b100; 
+            if (a_msb_is_0) begin 
+                next_state = idle_st;
+            end
+            else begin
+                next_state = A4B2;            
+            end
         end
+
         A4B2: begin
             next_state = idle_st;
             a_sel = 2'b11;
             b_sel = 1'b1;
             shift_sel = 3'b101;
-        end     
-            
+        end  
+
     endcase
-
 end
-
-
-
-
 // End of your code
-
 endmodule
