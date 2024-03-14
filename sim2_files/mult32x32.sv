@@ -11,11 +11,38 @@ module mult32x32 (
 
 // Put your code here
 // ------------------
-    //defining our states
-    typedef enum {idle_st, A1B1, A2B1, A3B1, A4B1, A1B2, A2B2, A3B2, A4B2} sm_type;kfdasd
 
-    
+// inner wires
+logic [1:0] a_sel;
+logic b_sel, upd_prod, clr_prod;      
+logic [2:0] shift_sel;
 
+// creating an instance of the fsm:
+mult32x32_fsm  our_fsm(
+    .clk(clk),               // Clock
+    .reset(reset),           // Reset
+    .start(start),           // Start
+    .busy(busy),             // Busy
+    .a_sel(a_sel),           // Select one byte from A
+    .b_sel(b_sel),           // Select one 2-byte word from B
+    .shift_sel(shift_sel),   // Select output from shifters
+    .upd_prod(upd_prod),     // Update the product register
+    .clr_prod(clr_prod)      // Clears the product register  
+);
+
+// creating an instance of the 
+mult32x32_arith our_arith (
+    .clk(clk),               // Clock
+    .reset(reset),           // Reset
+    .a(a),                   // Input a
+    .b(b),                   // Input b
+    .a_sel(a_sel),           // Select one byte from A
+    .b_sel(b_sel),           // Select one 2-byte word from B
+    .shift_sel(shift_sel),   // Select output from shifters
+    .upd_prod(upd_prod),     // Update the product register
+    .clr_prod(clr_prod),     // Clears the product register  
+    .product(product)        // Exits the products
+);
 
 // End of your code
 
