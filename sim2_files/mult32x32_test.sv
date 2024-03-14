@@ -39,10 +39,6 @@ initial begin
 
     #10;
     start = 1'b0;
-    while(busy) begin
-        #10;
-    end
-end
 
 always begin
     #5;
