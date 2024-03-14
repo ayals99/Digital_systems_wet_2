@@ -21,8 +21,7 @@ sm_type next_state;
 
 always_ff @(posedge clk, posedge reset) begin
     if (reset == 1'b1) begin
-        current_state <= idle_st;
-        
+        current_state <= idle_st;        
     end
     else begin
         current_state <= next_state;
@@ -32,83 +31,68 @@ end
 
 always_comb begin
     next_state = current_state;
-    busy = 1'b0;
+    busy = 1'b1;
     a_sel = 2'b00;
     b_sel = 1'b0;
     shift_sel = 3'b000;
-    upd_prod = 1'b0;
+    upd_prod = 1'b1;
     clr_prod = 1'b0;
 
     case (current_state)
-    idle_st: begin
-        if (start) begin
-            next_state = A1B1;
-            clr_prod = 1'b1;
+        idle_st: begin
+            busy = 1'b0;
+            upd_prod = 1'b0;
+            if (start) begin
+                next_state = A1B1;
+                clr_prod = 1'b1;
+            end
         end
-    end
-    A1B1: begin
-        next_state = A2B1;
-        a_sel = 2'b01;
-        upd_prod = 1'b1; 
-        busy = 1'b1;      
-    end
-    A2B1: begin
-        next_state = A3B1;
-        a_sel = 2'b10;
-        shift_sel = 3'b001;
-        upd_prod = 1'b1;
-        busy = 1'b1; 
+        A1B1: begin
+            next_state = A2B1;
+            a_sel = 2'b00;
+            b_sel = 1'b0;
+        end
+        A2B1: begin
+            next_state = A3B1;
+            a_sel = 2'b01;
+            shift_sel = 3'b001;
 
-    end
-    A3B1: begin
-        next_state = A4B1;
-        a_sel = 2'b11;
-        shift_sel = 3'b010;
-        upd_prod = 1'b1;
-        busy = 1'b1;
-    end
-    A4B1: begin
-        next_state = A1B2;
-        a_sel = 2'b00;
-        b_sel = 1'b1;
-        shift_sel = 3'b011;
-        upd_prod = 1'b1;
-        busy = 1'b1;
-    end
-    A1B2: begin
-        next_state = A2B2;
-        a_sel = 2'b01;
-        b_sel = 1'b1;
-        shift_sel = 3'b010;
-        upd_prod = 1'b1;
-        busy = 1'b1;
-    end
-    A2B2: begin
-        next_state = A3B2;
-        a_sel = 2'b10;
-        b_sel = 1'b1;
-        shift_sel = 3'b011;
-        upd_prod = 1'b1;
-        busy = 1'b1;
-    end
-    A3B2: begin
-        next_state = A4B2;
-        a_sel = 2'b11;
-        b_sel = 1'b1;
-        shift_sel = 3'b100;
-        upd_prod = 1'b1;
-        busy = 1'b1;
-    end
-    A4B2: begin
-        next_state = idle_st;
-        busy = 1'b0;
-        a_sel = 2'b00;
-        b_sel = 1'b0;
-        shift_sel = 3'b000;
-        upd_prod = 1'b1;
-        clr_prod = 1'b0;
-    end     
-          
+        end
+        A3B1: begin
+            next_state = A4B1;
+            a_sel = 2'b10;
+            shift_sel = 3'b010;
+        end
+        A4B1: begin
+            next_state = A1B2;
+            a_sel = 2'b11;
+            shift_sel = 3'b011;
+        end
+        A1B2: begin
+            next_state = A2B2;
+            a_sel = 2'b00;
+            b_sel = 1'b1;
+            shift_sel = 3'b010;
+        end
+        A2B2: begin
+            next_state = A3B2;
+            a_sel = 2'b01;
+            b_sel = 1'b1;
+            shift_sel = 3'b011;
+        end
+        A3B2: begin
+            next_state = A4B2;
+            a_sel = 2'b10;
+            b_sel = 1'b1;
+            shift_sel = 3'b100;
+        end
+        A4B2: begin
+            next_state = idle_st;
+            a_sel = 2'b11;
+            b_sel = 1'b1;
+            shift_sel = 3'b101;
+        end     
+            
     endcase
 
 end
