@@ -11,7 +11,7 @@ module mult32x32_test;
 
 // Put your code here
 // ------------------
-mult32x32 DUT (
+mult32x32 uut (
     .clk(clk),
     .reset(reset),
     .start(start),
