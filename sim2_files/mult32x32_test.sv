@@ -27,11 +27,11 @@ mult32x32 uut (
 
 initial begin
     // Initialize signals
-    clk = 1'b0;
+    clk = 1'b1;
     reset = 1'b1;
     start = 1'b0;
     a = 0;
-    b = 0;    
+    b = 0;
 
     #40;
     reset = 1'b0;

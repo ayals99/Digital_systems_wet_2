@@ -27,7 +27,7 @@ module mult32x32_fast_test;
 
     initial begin
         // Initialize signals
-        clk = 1'b0;
+        clk = 1'b1;
         reset = 1'b1;
         start = 1'b0;
         a = 0;
