@@ -44,7 +44,7 @@ module mult32x32_fast_test;
         #10;
         start = 1'b0;
 
-        #50;        
+        #100;        
         //We're now done with the first test
         //In this itiration a_msb_is_0 and b_msw_is_0 should be true
 
