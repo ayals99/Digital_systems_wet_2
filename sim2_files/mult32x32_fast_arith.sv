@@ -62,6 +62,9 @@ module mult32x32_fast_arith (
         else if (clr_prod) begin
             product <= 64'b0;        
         end
+        else if (upd_prod) begin
+        product <= product + accumulator;
+        end
     end 
 // End of your code
 endmodule
